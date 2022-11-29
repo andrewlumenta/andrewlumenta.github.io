@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Products - Kelompok 2 | 7 TI 1</title>
+    <title>Kategori</title>
     <meta property="og:type" content="website">
     <meta name="twitter:title" content="Waroeng Sepatu">
     <meta name="twitter:card" content="summary">
@@ -22,6 +22,21 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script>
+        function runScript(){
+        $(document).on('change', 'select', function() {
+            window.location = "?sort="+this.value;
+        });
+        sortProduct();
+        }
+        function sortProduct(){
+            const urlParams = new URLSearchParams(window.location.search);
+            const param = urlParams.get('sort');
+            document.getElementById("sort_product").querySelector("option[value='" + param + "']").selected = true;
+            $('div.daftar-produk').attr('data-reflow-order',param);
+        }
+        window.onload = runScript;
+    </script>
 </head>
 
 <body>
@@ -34,7 +49,7 @@
                     <li class="nav-item"><a class="nav-link" href="keranjang.html">Keranjang</a></li>
                     <li class="nav-item"><a class="nav-link" href="pesanan.html">Pesanan</a></li>
                 </ul>
-                <div class="text-primary" data-reflow-type="product-search" data-reflow-search-url="category.html" data-reflow-placeholder="Cari Sepatu..."></div>
+                <div class="text-primary" data-reflow-type="product-search" data-reflow-search-url="kategori.html" data-reflow-placeholder="Cari Sepatu..."></div>
                 <div class="d-flex justify-content-center h-100"></div>
             </div>
         </div>
@@ -43,19 +58,21 @@
         <div class="container py-5" style="padding-top: 12px;margin-top: -50px;">
             <div class="row mb-4 mb-lg-5">
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
-                    <h2 class="fw-bold">Products Category</h2>
+                    <h2 class="fw-bold">Kategori Produk</h2>
                 </div>
-            </div><select id="filter_product" style="background: rgba(255,255,255,0);color: var(--bs-orange);font-weight: bold;margin-left: 10px;border-style: none;" name="filter">
-                <option value="12" selected="">Harga Terendah</option>
-                <option value="13">Harga Tertinggi</option>
-                <option value="14">Terbaru</option>
+            </div>
+            <select id="sort_product" class="sort-select" style="background: rgba(255,255,255,0);color: var(--bs-orange);font-weight: bold;margin-left: 10px;border-style: none;" name="filter">
+                <option disabled selected>Urutkan Berdasarkan</option>
+                <option value="price_asc">Harga Terendah</option>
+                <option value="price_desc">Harga Tertinggi</option>
+                <option value="date_desc">Terbaru</option>
             </select>
-            <div class="form-check form-check-inline" style="margin-bottom: 20px;margin-left: 11px;"><input class="form-check-input" type="checkbox" id="formCheck-1" name="casual"><label class="form-check-label" for="formCheck-1">Casual</label></div>
-            <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="formCheck-2" name="sport"><label class="form-check-label" for="formCheck-2">Sport</label></div>
-            <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-3">Formal</label></div>
+            <a class="btn btn-kategori" type="button" href="kategori.html?category=1336789462">Casual</a>
+            <a class="btn btn-kategori" type="button" href="kategori.html?category=1172271752">Formal</a>
+            <a class="btn btn-kategori" type="button" href="kategori.html?category=1082437435">Sport</a>
             <div class="row mx-auto">
                 <div class="col">
-                    <div data-reflow-type="product-list" data-reflow-layout="cards" data-reflow-perpage="100" data-reflow-order="price_desc" data-reflow-product-link="/produk.html?product={id}" data-reflow-category="1336789462"></div>
+                    <div id="dftr" class="daftar-produk" data-reflow-type="product-list" data-reflow-layout="cards" data-reflow-perpage="100" data-reflow-order="" data-reflow-product-link="/produk.html?product={id}"></div>
                 </div>
             </div>
         </div>
